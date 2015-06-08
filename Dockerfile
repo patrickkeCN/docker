@@ -1,6 +1,6 @@
 FROM java:8u45-jdk
 
-RUN apt-get update && apt-get install -y wget git curl zip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y wget git curl zip sudo vim && rm -rf /var/lib/apt/lists/*
 
 ENV JENKINS_HOME /var/jenkins_home
 
@@ -8,6 +8,7 @@ ENV JENKINS_HOME /var/jenkins_home
 # If you bind mount a volume from host/vloume from a data container, 
 # ensure you use same uid
 RUN useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins
+RUN echo 'jenkins ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Jenkins home directoy is a volume, so configuration and build history 
 # can be persisted and survive image upgrades
